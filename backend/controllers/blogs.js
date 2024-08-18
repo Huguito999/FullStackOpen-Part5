@@ -66,8 +66,13 @@ router.put('/:id', async (request, response) => {
     likes: body.likes
   }
 
-  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-  response.json(updatedBlog)
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true }).populate('user', { username: 1, name: 1 });
+    response.json(updatedBlog);
+  } catch (error) {
+    response.status(400).json({ error: 'Blog update failed' });
+  }
 })
+
 
 module.exports = router

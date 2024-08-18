@@ -17,7 +17,7 @@ export default function BlogForm({
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={() => setBLogFormVisible(true)}>Create Blog</button>
+        <button onClick={() => setBLogFormVisible(true)}>Create a new blog</button>
       </div>
       <div style={showWhenVisible}>
         <form onSubmit={handleCreateBlog}>

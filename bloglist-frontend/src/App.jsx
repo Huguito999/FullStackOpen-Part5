@@ -28,6 +28,8 @@ const App = () => {
     }
   }, []);
 
+  console.log(blogs)
+
   const showNotification = (message, type = "success") => {
     setNotification({ message, type });
     setTimeout(() => {
@@ -72,6 +74,33 @@ const App = () => {
       showNotification("Error adding blog", "error");
     }
   };
+
+  const handleLike = async (blog) => {
+    try {
+      const updatedBlog = {
+        ...blog,
+        likes: blog.likes + 1,
+      };
+      const returnedBlog = await blogService.update(blog.id, updatedBlog);
+      setBlogs(blogs.map((b) => (b.id === blog.id ? returnedBlog : b)));
+    } catch (exception) {
+      showNotification("Error updating blog", "error");
+    }
+  };
+
+  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
+
+  const handleDelete = async (blog) => {
+    try {
+      await blogService.remove(blog.id);
+      setBlogs(blogs.filter((b) => b.id !== blog.id));
+      showNotification(`The blog ${blog.title} by ${blog.author} was deleted successfully`);
+    } catch (exception) {
+      showNotification("Error deleting blog", "error");
+    }
+  };
+
+
   const handleLogout = () => {
     window.localStorage.removeItem("loggedBlogAppUser");
     setUser(null);
@@ -113,8 +142,8 @@ const App = () => {
         />
       </div>
       <div>
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
+        {sortedBlogs.map((blog) => (
+          <Blog key={blog.id} blog={blog} handleLike={handleLike} handleDelete={handleDelete} user={user} />
         ))}
       </div>
     </div>
