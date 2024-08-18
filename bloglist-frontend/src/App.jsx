@@ -3,6 +3,8 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/Notification";
+import LoginForm from "./components/LoginForm";
+import BlogForm from "./components/BlogForm";
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
@@ -81,27 +83,13 @@ const App = () => {
       <div>
         <Notification message={notification.message} type={notification.type} />
         <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
+        <LoginForm
+          handleLogin={handleLogin}
+          username={username}
+          password={password}
+          setUsername={setUsername}
+          setPassword={setPassword}
+        />
       </div>
     );
   }
@@ -114,36 +102,15 @@ const App = () => {
       <button onClick={handleLogout}>logout</button>
       <div>
         <h2>create new</h2>
-        <form onSubmit={handleCreateBlog}>
-          <div>
-            title
-            <input
-              type="text"
-              value={newTitle}
-              name="title"
-              onChange={({ target }) => setNewTitle(target.value)}
-            />
-          </div>
-          <div>
-            author
-            <input
-              type="text"
-              value={newAuthor}
-              name="author"
-              onChange={({ target }) => setNewAuthor(target.value)}
-            />
-          </div>
-          <div>
-            url
-            <input
-              type="text"
-              value={newUrl}
-              name="url"
-              onChange={({ target }) => setNewUrl(target.value)}
-            />
-          </div>
-          <button type="submit">Create</button>
-        </form>
+        <BlogForm
+          handleCreateBlog={handleCreateBlog}
+          newTitle={newTitle}
+          newAuthor={newAuthor}
+          newUrl={newUrl}
+          setNewTitle={setNewTitle}
+          setNewAuthor={setNewAuthor}
+          setNewUrl={setNewUrl}
+        />
       </div>
       <div>
         {blogs.map((blog) => (
