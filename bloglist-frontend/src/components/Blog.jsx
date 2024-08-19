@@ -1,22 +1,22 @@
-import { useState } from "react";
-
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-  };
+  }
 
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(false)
 
-  const showWhenVisible = { display: showDetails ? "" : "none" };
+  const showWhenVisible = { display: showDetails ? '' : 'none' }
 
   const onLike = () => {
-    handleLike(blog);
-  };
-  console.log(blog.user);
+    handleLike(blog)
+  }
+  console.log(blog.user)
 
   const onDelete = () => {
     if (
@@ -24,16 +24,16 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
         `Do you really want to delete the blog "${blog.title}" by ${blog.author}?`
       )
     ) {
-      handleDelete(blog);
+      handleDelete(blog)
     }
-  };
+  }
 
   return (
     <div style={blogStyle}>
       <div>
         {blog.title} {blog.author}
         <button onClick={() => setShowDetails(!showDetails)}>
-          {showDetails ? "hide" : "view"}
+          {showDetails ? 'hide' : 'view'}
         </button>
       </div>
       <div style={showWhenVisible}>
@@ -48,7 +48,23 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
         )}
       </div>
     </div>
-  );
-};
-
-export default Blog;
+  )
+}
+Blog.propTypes = {
+  blog: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+  }),
+}
+export default Blog

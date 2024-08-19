@@ -27,5 +27,5 @@ export default function LoginForm({
       </div>
       <button type="submit">login</button>
     </form>
-  );
+  )
 }

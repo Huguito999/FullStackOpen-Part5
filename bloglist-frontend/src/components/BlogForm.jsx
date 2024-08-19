@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 export default function BlogForm({
   handleCreateBlog,
@@ -9,10 +9,10 @@ export default function BlogForm({
   setNewAuthor,
   setNewUrl,
 }) {
-  const [blogFormVisible, setBLogFormVisible] = useState(false);
+  const [blogFormVisible, setBLogFormVisible] = useState(false)
 
-  const hideWhenVisible = { display: blogFormVisible ? "none" : "" };
-  const showWhenVisible = { display: blogFormVisible ? "" : "none" };
+  const hideWhenVisible = { display: blogFormVisible ? 'none' : '' }
+  const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
 
   return (
     <div>
@@ -50,10 +50,10 @@ export default function BlogForm({
           </div>
           <button type="submit">Create</button>
         </form>
-       
-          <button onClick={() => setBLogFormVisible(false)}>Cancel</button>
-        
+
+        <button onClick={() => setBLogFormVisible(false)}>Cancel</button>
+
       </div>
     </div>
-  );
+  )
 }
