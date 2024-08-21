@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 export default function BlogForm({
   handleCreateBlog,
@@ -9,24 +9,30 @@ export default function BlogForm({
   setNewAuthor,
   setNewUrl,
 }) {
-  const [blogFormVisible, setBLogFormVisible] = useState(false)
+  const [blogFormVisible, setBlogFormVisible] = useState(false);
 
-  const hideWhenVisible = { display: blogFormVisible ? 'none' : '' }
-  const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
+  const hideWhenVisible = { display: blogFormVisible ? 'none' : '' };
+  const showWhenVisible = { display: blogFormVisible ? '' : 'none' };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleCreateBlog();
+  };
 
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={() => setBLogFormVisible(true)}>Create a new blog</button>
+        <button onClick={() => setBlogFormVisible(true)}>Create a new blog</button>
       </div>
       <div style={showWhenVisible}>
-        <form onSubmit={handleCreateBlog}>
+        <form onSubmit={handleSubmit}>
           <div>
             title
             <input
               type="text"
               value={newTitle}
               name="title"
+              placeholder="title"
               onChange={({ target }) => setNewTitle(target.value)}
             />
           </div>
@@ -36,6 +42,7 @@ export default function BlogForm({
               type="text"
               value={newAuthor}
               name="author"
+              placeholder="author"
               onChange={({ target }) => setNewAuthor(target.value)}
             />
           </div>
@@ -45,15 +52,14 @@ export default function BlogForm({
               type="text"
               value={newUrl}
               name="url"
+              placeholder="url"
               onChange={({ target }) => setNewUrl(target.value)}
             />
           </div>
           <button type="submit">Create</button>
         </form>
-
-        <button onClick={() => setBLogFormVisible(false)}>Cancel</button>
-
+        <button onClick={() => setBlogFormVisible(false)}>Cancel</button>
       </div>
     </div>
-  )
+  );
 }
