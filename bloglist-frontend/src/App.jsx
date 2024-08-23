@@ -56,24 +56,19 @@ const App = () => {
       showNotification('Wrong credentials', 'error')
     }
   }
-  const handleCreateBlog = async (event) => {
-    event.preventDefault()
+  const handleCreateBlog = async (blog) => {
     try {
-      const newBlog = {
-        title: newTitle,
-        author: newAuthor,
-        url: newUrl,
-      }
-      const returnedBlog = await blogService.create(newBlog)
-      setBlogs(blogs.concat(returnedBlog))
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
-      showNotification('Blog added successfully')
+      const returnedBlog = await blogService.create(blog);
+      setBlogs(blogs.concat(returnedBlog));
+      setNewTitle('');
+      setNewAuthor('');
+      setNewUrl('');
+      showNotification('Blog added successfully');
     } catch (exception) {
-      showNotification('Error adding blog', 'error')
+      showNotification('Error adding blog', 'error');
     }
-  }
+  };
+  
 
   const handleLike = async (blog) => {
     try {

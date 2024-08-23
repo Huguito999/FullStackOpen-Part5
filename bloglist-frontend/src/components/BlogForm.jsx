@@ -16,7 +16,11 @@ export default function BlogForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleCreateBlog();
+    handleCreateBlog({
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
+    });
   };
 
   return (

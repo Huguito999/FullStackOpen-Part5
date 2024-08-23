@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import { render, screen } from "@testing-library/react";
 import Blog from "./Blog";
 import userEvent from "@testing-library/user-event";
@@ -114,3 +114,45 @@ test("clicking 'like' button twice calls event handler twice", async () => {
   expect(mockHandleLike).toHaveBeenCalledTimes(2);
 });
 
+test('form calls handleCreateBlog with correct details when a new blog is created', async () => {
+  const mockHandleCreateBlog = vi.fn();
+  const userEventInstance = userEvent.setup();
+
+  const TestWrapper = () => {
+    const [newTitle, setNewTitle] = useState('');
+    const [newAuthor, setNewAuthor] = useState('');
+    const [newUrl, setNewUrl] = useState('');
+
+    return (
+      <BlogForm
+        handleCreateBlog={mockHandleCreateBlog}
+        newTitle={newTitle}
+        newAuthor={newAuthor}
+        newUrl={newUrl}
+        setNewTitle={setNewTitle}
+        setNewAuthor={setNewAuthor}
+        setNewUrl={setNewUrl}
+      />
+    );
+  };
+
+  render(<TestWrapper />);
+
+  const titleInput = screen.getByPlaceholderText('title');
+  const authorInput = screen.getByPlaceholderText('author');
+  const urlInput = screen.getByPlaceholderText('url');
+
+  await userEventInstance.type(titleInput, 'New Blog Title');
+  await userEventInstance.type(authorInput, 'New Blog Author');
+  await userEventInstance.type(urlInput, 'https://newblogurl.com');
+
+  const createButton = screen.getByText('Create');
+  await userEventInstance.click(createButton);
+
+  expect(mockHandleCreateBlog).toHaveBeenCalledTimes(1);
+  expect(mockHandleCreateBlog).toHaveBeenCalledWith({
+    title: 'New Blog Title',
+    author: 'New Blog Author',
+    url: 'https://newblogurl.com',
+  });
+});
